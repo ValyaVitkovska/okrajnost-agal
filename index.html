@@ -708,11 +708,24 @@ function drawMode3(){
   const dx=A.x-CX, dy=A.y-CY, len=Math.sqrt(dx*dx+dy*dy);
   const tx=-dy/len, ty=dx/len;  // единичен вектор по допирателната
 
-  // Дъга AB (оцветена) — по-кратката
-  const ccw = arcCCW(pts.A, pts.B);
-  const arcDeg = Math.min(ccw, 360-ccw);
-  if(ccw <= 180) arc(pts.A, pts.A+d2r(ccw), AMB, 5);
-  else           arc(pts.B, pts.B+d2r(360-ccw), AMB, 5);
+  // Дъга AB — тази, която е "пред" периферния ъгъл.
+  // По теоремата: периферният ъгъл = дъга / 2, дъгата е от страната
+  // към която "гледа" ъгълът (определена от знака на cross продукта).
+  const chDx0 = B.x-A.x, chDy0 = B.y-A.y;
+  const cross0 = chDx0*ty - chDy0*tx;
+  // Ако cross0 > 0: B е от лявата страна на допирателната (CCW посока)
+  // Дъгата е CCW от A до B ако cross0 > 0, иначе CW (= CCW от B до A)
+  const ccw = arcCCW(pts.A, pts.B);   // CCW от A до B
+  const cww  = 360 - ccw;             // CW  от A до B
+  // Избираме дъгата която е от страната на ъгъла:
+  // cross0 > 0 → B е в CCW посока → дъгата е CCW (малката ако ccw<180, иначе голямата)
+  let arcDeg, arcStart, arcSpan;
+  if(cross0 > 0){
+    arcDeg = ccw; arcStart = pts.A; arcSpan = d2r(ccw);
+  } else {
+    arcDeg = cww; arcStart = pts.B; arcSpan = d2r(cww);
+  }
+  arc(arcStart, arcStart + arcSpan, AMB, 5);
 
   // ── Централен ъгъл (по избор) ──
   const showCentral3 = document.getElementById('chkT3').checked;
@@ -906,8 +919,16 @@ function updateVals(){
     document.getElementById('v2g').textContent=(ar/2).toFixed(1);
   }
   else if(mode===3){
-    const ccw=arcCCW(pts.A,pts.B);
-    const ar=Math.min(ccw,360-ccw);
+    // Трябва да знаем посоката на допирателната, за да изберем правилната дъга.
+    // Допирателната в A е перп. на OA: tx=-dy/len, ty=dx/len
+    const Ax=CX+R*Math.cos(pts.A), Ay=CY+R*Math.sin(pts.A);
+    const Bx=CX+R*Math.cos(pts.B), By=CY+R*Math.sin(pts.B);
+    const dxA=Ax-CX, dyA=Ay-CY, lenA=Math.sqrt(dxA*dxA+dyA*dyA);
+    const txA=-dyA/lenA, tyA=dxA/lenA;
+    const chDx=Bx-Ax, chDy=By-Ay;
+    const cross=chDx*tyA-chDy*txA;
+    const ccw3=arcCCW(pts.A,pts.B);
+    const ar = cross>0 ? ccw3 : 360-ccw3;
     document.getElementById('v3a').textContent=ar.toFixed(1);
     document.getElementById('v3g').textContent=(ar/2).toFixed(1);
   }
