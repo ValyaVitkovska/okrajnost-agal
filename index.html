@@ -80,15 +80,6 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:
   box-shadow:0 2px 8px var(--sh); border-color:var(--border);
 }
 
-/* Warning */
-#warn {
-  display:none; margin:8px 12px 0;
-  padding:9px 13px; background:#fee2e2; color:#991b1b;
-  border-left:4px solid #ef4444; border-radius:0 8px 8px 0;
-  font-size:.82rem; flex-shrink:0;
-}
-.dark #warn { background:rgba(153,27,27,.22); color:#fca5a5; }
-
 /* Theory area */
 #theory { flex:1; overflow-y:auto; padding:14px 16px; line-height:1.65; }
 .mc { display:none; }
@@ -127,9 +118,6 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:
   min-height: 52px;
   display: flex; align-items: center; justify-content: center;
 }
-/* MathJax override for size */
-.formula-display .MJX-TEX,
-.formula-display mjx-container { font-size: 1.2em !important; }
 
 /* Values grid */
 .vgrid {
@@ -170,14 +158,14 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:
   margin-bottom:12px; transition:background .2s;
 }
 .tglbl:hover { background:var(--border); }
-.tglbl input { width:15px; height:15px; cursor:pointer; accent-color:#3b82f6; }
+.tglbl input { width:16px; height:16px; cursor:pointer; accent-color:#8b5cf6; }
 
 /* Controls */
 #ctrl {
   display:none; padding:12px 14px;
   border-top:1px solid var(--border);
   background:var(--inset); flex-shrink:0;
-  gap:8px; flex-direction:column;
+  gap:10px; flex-direction:column;
 }
 #ctrl.on { display:flex; }
 .crow { display:flex; gap:8px; }
@@ -250,8 +238,7 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:
   border-radius:20px; transition:opacity .3s;
 }
 #ov.h { display:none; }
-#ov img { max-width:380px; width:100%; border-radius:16px; }
-#ovfb { display:none; flex-direction:column; align-items:center; gap:12px; padding:40px 0; }
+#ovfb { display:flex; flex-direction:column; align-items:center; gap:12px; padding:40px 0; }
 .spr {
   margin-top:24px; font-size:1rem; font-weight:700;
   color:var(--text); animation:pulse 2s infinite;
@@ -266,7 +253,6 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:
 
 /* ── RESPONSIVE ── */
 
-/* Tablet portrait (≤900px): tabs become icons, panel narrower */
 @media (max-width:900px) and (orientation:portrait), (max-width:700px) {
   body { flex-direction: column; overflow: hidden; }
   #lp {
@@ -294,13 +280,12 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:
   .vr { font-size:.8rem; }
   .vr.res { font-size:.9rem; }
   .dv { font-size:1rem; }
-  #ctrl { padding:8px 12px; }
+  #ctrl { padding:8px 12px; gap:8px; }
   .btn { padding:8px; font-size:.8rem; }
   #rp { flex:1; padding:8px; min-height:0; }
   #cw { border-radius:14px; }
 }
 
-/* Phone landscape */
 @media (max-width:900px) and (orientation:landscape) {
   body { flex-direction:row; }
   #lp { width:280px; min-width:240px; }
@@ -308,7 +293,6 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:
   #theory { max-height:none; }
 }
 
-/* Large screens */
 @media (min-width:1400px) {
   #lp { width:480px; max-width:480px; }
   :root { --fs-def:1.05rem; --fs-th:1.1rem; --fs-lbl:.92rem; --fs-val:1.15rem; }
@@ -331,7 +315,6 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:
     <button class="tab"    onclick="setMode(4)" id="t4"><span class="dot" style="background:#10b981"></span>4. Вътрешен</button>
     <button class="tab"    onclick="setMode(5)" id="t5"><span class="dot" style="background:#8b5cf6"></span>5. Външен</button>
   </div>
-  <div id="warn">⚠️ <strong>Внимание:</strong> Невалидна конфигурация.</div>
   <div id="theory">
 
     <div class="mc on" id="c0">
@@ -346,8 +329,7 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:
     <div class="mc" id="c1">
       <p class="def-title" style="color:#3b82f6">Централен ъгъл</p>
       <div class="def-text" style="border-color:#3b82f6">
-        <strong>Определение.</strong> Ъгъл с връх в центъра <em>O</em> на окръжността,
-        чиито рамена са два радиуса, се нарича <strong>централен ъгъл</strong>.
+        <strong>Определение.</strong> <strong>Централен ъгъл</strong> за дадена окръжност се нарича ъгъл, чийто връх е центърът на окръжността.
       </div>
       <div class="fcard" style="color:#3b82f6;background:rgba(59,130,246,.07)">
         <p class="thm-label">Теорема:</p>
@@ -363,41 +345,40 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:
     <div class="mc" id="c2">
       <p class="def-title" style="color:#ef4444">Вписан ъгъл</p>
       <div class="def-text" style="border-color:#ef4444">
-        <strong>Определение.</strong> Ъгъл с връх <em>C</em> на окръжността,
-        чиито рамена са хорди, се нарича <strong>вписан ъгъл</strong>.
-        Той опира дъгата <svg viewBox="0 0 22 26" width="22" height="26" style="overflow:visible;vertical-align:-2px;display:inline-block"><path d="M 1 14 Q 11 2 21 14" stroke="currentColor" stroke-width="1.4" fill="none"/><text x="11" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="currentColor">AB</text></svg>, която не съдържа <em>C</em>.
+        <strong>Определение.</strong> Ъгъл, чийто връх лежи на окръжност и раменете му пресичат окръжността, се нарича <strong>вписан ъгъл</strong> в окръжността.<br><br>
+        Дъгата, която не съдържа върха на ъгъла, се нарича <strong>принадлежаща (съответна) дъга</strong>.
+        Съответният централен ъгъл на принадлежащата дъга се нарича <strong>съответен централен ъгъл</strong> на вписания ъгъл.
       </div>
       <label class="tglbl"><input type="checkbox" id="chkC" onchange="redraw()">Покажи съответния централен ъгъл</label>
       <div class="fcard" style="color:#ef4444;background:rgba(239,68,68,.07)">
         <p class="thm-label">Теорема за вписания ъгъл:</p>
-        <div class="formula-display"><svg viewBox="0 0 165 78" width="165" height="78" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:8px auto 4px;max-width:100%;overflow:visible"><text x="12.0" y="48" font-family="Georgia,serif" font-size="24" font-style="italic" fill="currentColor">∠ACB</text><text x="76.3" y="48" font-family="Georgia,serif" font-size="24" fill="currentColor"> = </text><line x1="106.6" y1="48.0" x2="151.1" y2="48.0" stroke="currentColor" stroke-width="1.7"/><g transform="translate(114.6,12.0)"><text x="0.0" y="21" font-family="Georgia,serif" font-size="21" font-style="italic" fill="currentColor">AB</text><path d="M 0.0 3.0 Q 14.3 -2.0 28.6 3.0" stroke="currentColor" stroke-width="1.8" fill="none"/></g><text x="122.5" y="74.0" font-family="Georgia,serif" font-size="21" fill="currentColor">2</text></svg></div>
+        <div class="formula-display"><svg viewBox="0 0 165 78" width="165" height="78" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:8px auto 4px;max-width:100%;overflow:visible"><text x="12.0" y="48" font-family="Georgia,serif" font-size="24" font-style="italic" fill="currentColor">∠ABC</text><text x="76.3" y="48" font-family="Georgia,serif" font-size="24" fill="currentColor"> = </text><line x1="106.6" y1="48.0" x2="151.1" y2="48.0" stroke="currentColor" stroke-width="1.7"/><g transform="translate(114.6,12.0)"><text x="0.0" y="21" font-family="Georgia,serif" font-size="21" font-style="italic" fill="currentColor">AC</text><path d="M 0.0 3.0 Q 14.3 -2.0 28.6 3.0" stroke="currentColor" stroke-width="1.8" fill="none"/></g><text x="122.5" y="74.0" font-family="Georgia,serif" font-size="21" fill="currentColor">2</text></svg></div>
         <p class="thm-note">Вписаният ъгъл е равен на половината от съответната му дъга.</p>
         <div class="vgrid">
-          <div class="vr"><span class="lbl">Дъга <svg viewBox="0 0 22 26" width="22" height="26" style="overflow:visible;vertical-align:-2px;display:inline-block"><path d="M 1 14 Q 11 2 21 14" stroke="currentColor" stroke-width="1.4" fill="none"/><text x="11" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="currentColor">AB</text></svg></span><span><span class="dv" id="v2a" style="color:#ef4444">—</span>°</span></div>
-          <div class="vr res" style="color:#ef4444"><span><span style="font-family:Georgia,serif;font-size:1.0em;font-style:italic">∠ACB</span> =</span><span><span class="dv" id="v2g">—</span>°</span></div>
+          <div class="vr"><span class="lbl">Дъга <svg viewBox="0 0 22 26" width="22" height="26" style="overflow:visible;vertical-align:-2px;display:inline-block"><path d="M 1 14 Q 11 2 21 14" stroke="currentColor" stroke-width="1.4" fill="none"/><text x="11" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="currentColor">AC</text></svg></span><span><span class="dv" id="v2a" style="color:#ef4444">—</span>°</span></div>
+          <div class="vr res" style="color:#ef4444"><span><span style="font-family:Georgia,serif;font-size:1.0em;font-style:italic">∠ABC</span> =</span><span><span class="dv" id="v2g">—</span>°</span></div>
         </div>
       </div>
       <div class="hbox ibox" id="thint" style="color:#059669;background:rgba(5,150,105,.09);border-color:rgba(5,150,105,.28)">
         ⭐ <strong>Следствие (Теорема на Талес).</strong>
-        Ако <svg viewBox="0 0 22 26" width="22" height="26" style="overflow:visible;vertical-align:-2px;display:inline-block"><path d="M 1 14 Q 11 2 21 14" stroke="currentColor" stroke-width="1.4" fill="none"/><text x="11" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="currentColor">AB</text></svg> = 180° (т.е. <em>AB</em> е диаметър), то <span style="font-family:Georgia,serif;font-size:1.0em;font-style:italic">∠ACB</span> = 90°.
+        Ако <svg viewBox="0 0 22 26" width="22" height="26" style="overflow:visible;vertical-align:-2px;display:inline-block"><path d="M 1 14 Q 11 2 21 14" stroke="currentColor" stroke-width="1.4" fill="none"/><text x="11" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="currentColor">AC</text></svg> = 180° (т.е. <em>AC</em> е диаметър), то <span style="font-family:Georgia,serif;font-size:1.0em;font-style:italic">∠ABC</span> = 90°.
       </div>
     </div>
 
     <div class="mc" id="c3">
       <p class="def-title" style="color:#f59e0b">Периферен ъгъл</p>
       <div class="def-text" style="border-color:#f59e0b">
-        <strong>Определение.</strong> Ъгъл, образуван от <strong>допирателна</strong> <em>t</em>
-        и <strong>хорда</strong> <em>AB</em> с обща точка <em>A</em> на окръжността,
-        се нарича <strong>периферен ъгъл</strong>.
+        <strong>Определение.</strong> Ъгъл, чийто връх лежи на окръжност, едното му рамо се допира до окръжността, а другото му рамо пресича окръжността, се нарича <strong>периферен ъгъл</strong> (за окръжността).<br><br>
+        Дъгата, която е между раменете на периферния ъгъл, се нарича <strong>принадлежаща дъга</strong>. Съответният централен ъгъл на принадлежащата дъга се нарича <strong>съответен централен ъгъл</strong> на периферния ъгъл.
       </div>
       <label class="tglbl"><input type="checkbox" id="chkT3" onchange="redraw()">Покажи съответния централен ъгъл</label>
       <div class="fcard" style="color:#f59e0b;background:rgba(245,158,11,.07)">
         <p class="thm-label">Теорема:</p>
-        <div class="formula-display"><svg viewBox="0 0 189 78" width="189" height="78" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:8px auto 4px;max-width:100%;overflow:visible"><text x="12.0" y="48" font-family="Georgia,serif" font-size="24" font-style="italic" fill="currentColor">∠(t, AB)</text><text x="101.0" y="48" font-family="Georgia,serif" font-size="24" fill="currentColor"> = </text><line x1="131.3" y1="48.0" x2="175.8" y2="48.0" stroke="currentColor" stroke-width="1.7"/><g transform="translate(139.3,12.0)"><text x="0.0" y="21" font-family="Georgia,serif" font-size="21" font-style="italic" fill="currentColor">AB</text><path d="M 0.0 3.0 Q 14.3 -2.0 28.6 3.0" stroke="currentColor" stroke-width="1.8" fill="none"/></g><text x="147.3" y="74.0" font-family="Georgia,serif" font-size="21" fill="currentColor">2</text></svg></div>
-        <p class="thm-note">Периферният ъгъл е равен на половината от дъгата <em>AB</em>.</p>
+        <div class="formula-display"><svg viewBox="0 0 165 78" width="165" height="78" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:8px auto 4px;max-width:100%;overflow:visible"><text x="12.0" y="48" font-family="Georgia,serif" font-size="24" font-style="italic" fill="currentColor">∠ABC</text><text x="76.3" y="48" font-family="Georgia,serif" font-size="24" fill="currentColor"> = </text><line x1="106.6" y1="48.0" x2="151.1" y2="48.0" stroke="currentColor" stroke-width="1.7"/><g transform="translate(114.6,12.0)"><text x="0.0" y="21" font-family="Georgia,serif" font-size="21" font-style="italic" fill="currentColor">AB</text><path d="M 0.0 3.0 Q 14.3 -2.0 28.6 3.0" stroke="currentColor" stroke-width="1.8" fill="none"/></g><text x="122.5" y="74.0" font-family="Georgia,serif" font-size="21" fill="currentColor">2</text></svg></div>
+        <p class="thm-note">Периферният ъгъл е равен на половината от принадлежащата дъга <em>AB</em>.</p>
         <div class="vgrid">
           <div class="vr"><span class="lbl">Дъга <svg viewBox="0 0 22 26" width="22" height="26" style="overflow:visible;vertical-align:-2px;display:inline-block"><path d="M 1 14 Q 11 2 21 14" stroke="currentColor" stroke-width="1.4" fill="none"/><text x="11" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="currentColor">AB</text></svg></span><span><span class="dv" id="v3a" style="color:#f59e0b">—</span>°</span></div>
-          <div class="vr res" style="color:#f59e0b"><span>∠(<em>t</em>, <em>AB</em>) =</span><span><span class="dv" id="v3g">—</span>°</span></div>
+          <div class="vr res" style="color:#f59e0b"><span><span style="font-family:Georgia,serif;font-size:1.0em;font-style:italic">∠ABC</span> =</span><span><span class="dv" id="v3g">—</span>°</span></div>
         </div>
       </div>
     </div>
@@ -405,17 +386,17 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:
     <div class="mc" id="c4">
       <p class="def-title" style="color:#10b981">Ъгъл с връх вътре в окръжността</p>
       <div class="def-text" style="border-color:#10b981">
-        <strong>Определение.</strong> Ако две хорди <em>AC</em> и <em>BD</em> се пресичат
-        във вътрешна точка <em>M</em>, ъгъл <span style="font-family:Georgia,serif;font-size:1.0em;font-style:italic">∠AMD</span> се образува между тях.
+        <strong>Запомнете!</strong> Ъгъл, чиито рамене пресичат окръжност: 
+        Точка <em>B</em> – вътрешна за <em>k</em>. Дъгите <svg viewBox="0 0 22 26" width="22" height="26" style="overflow:visible;vertical-align:-2px;display:inline-block"><path d="M 1 14 Q 11 2 21 14" stroke="currentColor" stroke-width="1.4" fill="none"/><text x="11" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="currentColor">AC</text></svg> и <svg viewBox="0 0 22 26" width="22" height="26" style="overflow:visible;vertical-align:-2px;display:inline-block"><path d="M 1 14 Q 11 2 21 14" stroke="currentColor" stroke-width="1.4" fill="none"/><text x="11" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="currentColor">DE</text></svg> са принадлежащи дъги.
       </div>
       <div class="fcard" style="color:#10b981;background:rgba(16,185,129,.07)">
-        <p class="thm-label">Теорема:</p>
-        <div class="formula-display"><svg viewBox="0 0 223 82" width="223" height="82" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:8px auto 4px;max-width:100%;overflow:visible"><text x="12.0" y="50" font-family="Georgia,serif" font-size="24" font-style="italic" fill="currentColor">∠AMD</text><text x="81.1" y="50" font-family="Georgia,serif" font-size="24" fill="currentColor"> = </text><line x1="111.4" y1="50.0" x2="209.4" y2="50.0" stroke="currentColor" stroke-width="1.7"/><g transform="translate(121.4,25.0)"><text x="0" y="20" font-family="Georgia,serif" font-size="20" font-style="italic" fill="currentColor">AD</text><path d="M 0 -1 Q 14.0 -26 28.0 -1" stroke="currentColor" stroke-width="1.7" fill="none"/><text x="28.0" y="20" font-family="Georgia,serif" font-size="20" fill="currentColor"> + </text><text x="52.0" y="20" font-family="Georgia,serif" font-size="20" font-style="italic" fill="currentColor">BC</text><path d="M 52.0 -1 Q 65.0 -26 78.0 -1" stroke="currentColor" stroke-width="1.7" fill="none"/></g><text x="154.4" y="75.0" font-family="Georgia,serif" font-size="20" fill="currentColor">2</text></svg></div>
+        <p class="thm-label">Формула:</p>
+        <div class="formula-display"><svg viewBox="0 0 223 82" width="223" height="82" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:8px auto 4px;max-width:100%;overflow:visible"><text x="12.0" y="50" font-family="Georgia,serif" font-size="24" font-style="italic" fill="currentColor">∠ABC</text><text x="81.1" y="50" font-family="Georgia,serif" font-size="24" fill="currentColor"> = </text><line x1="111.4" y1="50.0" x2="209.4" y2="50.0" stroke="currentColor" stroke-width="1.7"/><g transform="translate(121.4,25.0)"><text x="0" y="20" font-family="Georgia,serif" font-size="20" font-style="italic" fill="currentColor">AC</text><path d="M 0 -1 Q 14.0 -26 28.0 -1" stroke="currentColor" stroke-width="1.7" fill="none"/><text x="28.0" y="20" font-family="Georgia,serif" font-size="20" fill="currentColor"> + </text><text x="52.0" y="20" font-family="Georgia,serif" font-size="20" font-style="italic" fill="currentColor">DE</text><path d="M 52.0 -1 Q 65.0 -26 78.0 -1" stroke="currentColor" stroke-width="1.7" fill="none"/></g><text x="154.4" y="75.0" font-family="Georgia,serif" font-size="20" fill="currentColor">2</text></svg></div>
         <p class="thm-note">Равен на полусбора от двете срещуположни дъги.</p>
         <div class="vgrid">
-          <div class="vr"><span class="lbl">Дъга <svg viewBox="0 0 22 26" width="22" height="26" style="overflow:visible;vertical-align:-2px;display:inline-block"><path d="M 1 14 Q 11 2 21 14" stroke="currentColor" stroke-width="1.4" fill="none"/><text x="11" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="currentColor">AD</text></svg> <b style="color:#10b981">●</b></span><span><span class="dv" id="v4a1">—</span>°</span></div>
-          <div class="vr"><span class="lbl">Дъга <svg viewBox="0 0 22 26" width="22" height="26" style="overflow:visible;vertical-align:-2px;display:inline-block"><path d="M 1 14 Q 11 2 21 14" stroke="currentColor" stroke-width="1.4" fill="none"/><text x="11" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="currentColor">BC</text></svg> <b style="color:#3b82f6">●</b></span><span><span class="dv" id="v4a2">—</span>°</span></div>
-          <div class="vr res" style="color:#10b981"><span><span style="font-family:Georgia,serif;font-size:1.0em;font-style:italic">∠AMD</span> =</span><span><span class="dv" id="v4g">—</span>°</span></div>
+          <div class="vr"><span class="lbl">Дъга <svg viewBox="0 0 22 26" width="22" height="26" style="overflow:visible;vertical-align:-2px;display:inline-block"><path d="M 1 14 Q 11 2 21 14" stroke="currentColor" stroke-width="1.4" fill="none"/><text x="11" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="currentColor">AC</text></svg> <b style="color:#10b981">●</b></span><span><span class="dv" id="v4a1">—</span>°</span></div>
+          <div class="vr"><span class="lbl">Дъга <svg viewBox="0 0 22 26" width="22" height="26" style="overflow:visible;vertical-align:-2px;display:inline-block"><path d="M 1 14 Q 11 2 21 14" stroke="currentColor" stroke-width="1.4" fill="none"/><text x="11" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="currentColor">DE</text></svg> <b style="color:#3b82f6">●</b></span><span><span class="dv" id="v4a2">—</span>°</span></div>
+          <div class="vr res" style="color:#10b981"><span><span style="font-family:Georgia,serif;font-size:1.0em;font-style:italic">∠ABC</span> =</span><span><span class="dv" id="v4g">—</span>°</span></div>
         </div>
       </div>
     </div>
@@ -423,25 +404,27 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:
     <div class="mc" id="c5">
       <p class="def-title" style="color:#8b5cf6">Ъгъл с връх вън от окръжността</p>
       <div class="def-text" style="border-color:#8b5cf6">
-        <strong>Определение.</strong> Ако две секущи от външна точка <em>M</em>
-        пресичат окръжността в точки <em>A</em>, <em>C</em> и <em>B</em>, <em>D</em>
-        (с <em>A</em>, <em>B</em> по-близо до <em>M</em>),
-        то <span style="font-family:Georgia,serif;font-size:1.0em;font-style:italic">∠M</span> е ъгълът при върха <em>M</em>.
+        <strong>Запомнете!</strong> Ъгъл, чиито рамене пресичат окръжност:
+        Точка <em>B</em> – външна за <em>k</em>. Дъгите <svg viewBox="0 0 22 26" width="22" height="26" style="overflow:visible;vertical-align:-2px;display:inline-block"><path d="M 1 14 Q 11 2 21 14" stroke="currentColor" stroke-width="1.4" fill="none"/><text x="11" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="currentColor">AC</text></svg> и <svg viewBox="0 0 22 26" width="22" height="26" style="overflow:visible;vertical-align:-2px;display:inline-block"><path d="M 1 14 Q 11 2 21 14" stroke="currentColor" stroke-width="1.4" fill="none"/><text x="11" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="currentColor">DE</text></svg> са принадлежащи дъги.
       </div>
       <div class="fcard" style="color:#8b5cf6;background:rgba(139,92,246,.07)">
-        <p class="thm-label">Теорема:</p>
-        <div class="formula-display"><svg viewBox="0 0 189 82" width="189" height="82" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:8px auto 4px;max-width:100%;overflow:visible"><text x="12.0" y="50" font-family="Georgia,serif" font-size="24" font-style="italic" fill="currentColor">∠M</text><text x="47.5" y="50" font-family="Georgia,serif" font-size="24" fill="currentColor"> = </text><line x1="77.8" y1="50.0" x2="175.8" y2="50.0" stroke="currentColor" stroke-width="1.7"/><g transform="translate(87.8,25.0)"><text x="0" y="20" font-family="Georgia,serif" font-size="20" font-style="italic" fill="currentColor">CD</text><path d="M 0 -1 Q 13.4 -25 26.8 -1" stroke="currentColor" stroke-width="1.7" fill="none"/><text x="26.8" y="20" font-family="Georgia,serif" font-size="20" fill="currentColor"> − </text><text x="50.8" y="20" font-family="Georgia,serif" font-size="20" font-style="italic" fill="currentColor">AB</text><path d="M 50.8 -1 Q 64.4 -25 78.0 -1" stroke="currentColor" stroke-width="1.7" fill="none"/></g><text x="120.8" y="75.0" font-family="Georgia,serif" font-size="20" fill="currentColor">2</text></svg></div>
+        <p class="thm-label">Формула:</p>
+        <div class="formula-display"><svg viewBox="0 0 223 82" width="223" height="82" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:8px auto 4px;max-width:100%;overflow:visible"><text x="12.0" y="50" font-family="Georgia,serif" font-size="24" font-style="italic" fill="currentColor">∠ABC</text><text x="81.1" y="50" font-family="Georgia,serif" font-size="24" fill="currentColor"> = </text><line x1="111.4" y1="50.0" x2="209.4" y2="50.0" stroke="currentColor" stroke-width="1.7"/><g transform="translate(121.4,25.0)"><text x="0" y="20" font-family="Georgia,serif" font-size="20" font-style="italic" fill="currentColor">AC</text><path d="M 0 -1 Q 14.0 -26 28.0 -1" stroke="currentColor" stroke-width="1.7" fill="none"/><text x="26.8" y="20" font-family="Georgia,serif" font-size="20" fill="currentColor"> − </text><text x="50.8" y="20" font-family="Georgia,serif" font-size="20" font-style="italic" fill="currentColor">DE</text><path d="M 50.8 -1 Q 65.0 -26 78.0 -1" stroke="currentColor" stroke-width="1.7" fill="none"/></g><text x="154.4" y="75.0" font-family="Georgia,serif" font-size="20" fill="currentColor">2</text></svg></div>
         <p class="thm-note">Равен на полуразликата от голямата и малката дъга.</p>
         <div class="vgrid">
-          <div class="vr"><span class="lbl">Дъга <svg viewBox="0 0 22 26" width="22" height="26" style="overflow:visible;vertical-align:-2px;display:inline-block"><path d="M 1 14 Q 11 2 21 14" stroke="currentColor" stroke-width="1.4" fill="none"/><text x="11" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="currentColor">CD</text></svg> <b style="color:#8b5cf6">●</b> (голяма)</span><span><span class="dv" id="v5a1">—</span>°</span></div>
-          <div class="vr"><span class="lbl">Дъга <svg viewBox="0 0 22 26" width="22" height="26" style="overflow:visible;vertical-align:-2px;display:inline-block"><path d="M 1 14 Q 11 2 21 14" stroke="currentColor" stroke-width="1.4" fill="none"/><text x="11" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="currentColor">AB</text></svg> <b style="color:#3b82f6">●</b> (малка)</span><span><span class="dv" id="v5a2">—</span>°</span></div>
-          <div class="vr res" style="color:#8b5cf6"><span><span style="font-family:Georgia,serif;font-size:1.0em;font-style:italic">∠M</span> =</span><span><span class="dv" id="v5g">—</span>°</span></div>
+          <div class="vr"><span class="lbl">Дъга <svg viewBox="0 0 22 26" width="22" height="26" style="overflow:visible;vertical-align:-2px;display:inline-block"><path d="M 1 14 Q 11 2 21 14" stroke="currentColor" stroke-width="1.4" fill="none"/><text x="11" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="currentColor">AC</text></svg> <b style="color:#8b5cf6">●</b> (голяма)</span><span><span class="dv" id="v5a1">—</span>°</span></div>
+          <div class="vr"><span class="lbl">Дъга <svg viewBox="0 0 22 26" width="22" height="26" style="overflow:visible;vertical-align:-2px;display:inline-block"><path d="M 1 14 Q 11 2 21 14" stroke="currentColor" stroke-width="1.4" fill="none"/><text x="11" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="currentColor">DE</text></svg> <b style="color:#3b82f6">●</b> (малка)</span><span><span class="dv" id="v5a2">—</span>°</span></div>
+          <div class="vr res" style="color:#8b5cf6"><span><span style="font-family:Georgia,serif;font-size:1.0em;font-style:italic">∠ABC</span> =</span><span><span class="dv" id="v5g">—</span>°</span></div>
         </div>
       </div>
     </div>
 
   </div>
   <div id="ctrl">
+    <label class="tglbl" style="justify-content:center; border-color:var(--accent); color:var(--text); box-shadow: 0 2px 8px var(--sh);">
+      <input type="checkbox" id="chkAnn" onchange="redraw()"> 
+      <span style="color:var(--accent); margin-right:4px;">📝</span> <strong>Покажи обозначенията</strong>
+    </label>
     <button id="bth" class="btn bsp" onclick="snapDiam()">🎯 Покажи: Диаметър (Талес)</button>
     <div class="crow">
       <button class="btn bsec" onclick="resetPts()">🔄 Начално</button>
@@ -459,18 +442,15 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:
     <canvas id="cv"></canvas>
     <div id="chint">Местете цветните точки и радиусната дръжка ◇ с мишката или пръст</div>
     <div id="ov">
-      <img src="okrajnost-agal.png" alt="Окръжност и ъгъл"
-           onerror="this.style.display='none';document.getElementById('ovfb').style.display='flex'">
       <div id="ovfb">
-        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" stroke="#6366f1" stroke-width="2.5">
+        <svg width="100" height="100" viewBox="0 0 72 72" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--text)">
           <circle cx="36" cy="36" r="30"/>
-          <polyline points="36,6 62,60 10,60 36,6"/>
+          <polyline points="36,6 62,60 10,60 36,6" stroke="#6366f1"/>
         </svg>
-        <span style="font-size:1.3rem;font-weight:800;color:var(--text)">Окръжност и ъгъл</span>
+        <span style="font-size:1.5rem;font-weight:800;color:var(--text);letter-spacing: -0.02em;">Окръжност и ъгъл</span>
       </div>
       <p class="spr">👈 Изберете тема от панела вляво</p>
-      <div class="cred">По идея на <strong>Валя Витковска</strong><br>
-        Реализация: <strong style="color:#6366f1">Claude · Anthropic</strong></div>
+      <div class="cred">По идея на <strong>Валя Витковска</strong></div>
     </div>
   </div>
 </div>
@@ -535,6 +515,35 @@ function isect(p1,d1,p2,d2){
   return {x:p1.x+d1.x*t, y:p1.y+d1.y*t};
 }
 
+// ─── Glow Animation Logic ───────────────────────────────
+let activeGlow = null;
+let glowPhase = 0;
+let glowRaf = null;
+
+function startGlow(id) {
+  activeGlow = id;
+  if (glowRaf) cancelAnimationFrame(glowRaf);
+  const startTime = performance.now();
+  const duration = 1200; // Продължителност на пулсирането
+  
+  function step(now) {
+    let elapsed = now - startTime;
+    if (elapsed > duration) {
+       activeGlow = null;
+       glowPhase = 0;
+       redraw();
+       return;
+    }
+    // Плавен пулс
+    glowPhase = Math.sin((elapsed / duration) * Math.PI);
+    if (glowPhase < 0) glowPhase = 0;
+    
+    redraw();
+    glowRaf = requestAnimationFrame(step);
+  }
+  glowRaf = requestAnimationFrame(step);
+}
+
 // ─── Points (angles in radians) + radius handle ──────────
 const pts = {};
 let _Rx = 0, _Ry = 0;  // позиция на радиусната дръжка
@@ -543,24 +552,34 @@ function px(n){ return CX + R*Math.cos(pts[n]); }
 function py(n){ return CY + R*Math.sin(pts[n]); }
 function pxy(n){ return {x:px(n),y:py(n)}; }
 
+// Обновени ключове на точки, за да съответстват на върховете в урока
 const DEFS = {
   1:{A:d2r(60), B:d2r(140)},
-  2:{A:d2r(40), B:d2r(140), C:d2r(250)},
-  3:{A:d2r(90), B:d2r(25)},
-  4:{A:d2r(50), B:d2r(130), C:d2r(220), D:d2r(320)},
-  5:{A:d2r(155), B:d2r(205), C:d2r(65),  D:d2r(295)},
+  2:{B:d2r(40), A:d2r(140), C:d2r(250)},
+  3:{B:d2r(90), A:d2r(25)},
+  4:{A:d2r(70), C:d2r(340), D:d2r(250), E:d2r(160)},
+  5:{A:d2r(220), D:d2r(340), C:d2r(140), E:d2r(20)},
 };
-function resetPts(){ if(DEFS[mode]) Object.assign(pts,DEFS[mode]); if(_Rx===0)initRadiusHandle(); redraw(); }
+function resetPts(){ 
+  for (let k in pts) delete pts[k];
+  if(DEFS[mode]) Object.assign(pts,DEFS[mode]); 
+  if(_Rx===0)initRadiusHandle(); 
+  redraw(); 
+}
 function randPts(){
+  for (let k in pts) delete pts[k];
   const j=()=>d2r(Math.random()*36-18);
   if(mode===1){pts.A=d2r(Math.random()*360);pts.B=pts.A+d2r(50+Math.random()*110);}
-  if(mode===2){pts.A=d2r(40)+j();pts.B=d2r(140)+j();pts.C=d2r(250)+j();}
-  if(mode===3){pts.A=d2r(Math.random()*360);pts.B=pts.A+d2r(30+Math.random()*120);}
-  if(mode===4){pts.A=d2r(50)+j();pts.B=d2r(130)+j();pts.C=d2r(220)+j();pts.D=d2r(320)+j();}
-  if(mode===5){pts.A=d2r(155)+j();pts.B=d2r(205)+j();pts.C=d2r(65)+j();pts.D=d2r(295)+j();}
+  if(mode===2){pts.B=d2r(40)+j();pts.A=d2r(140)+j();pts.C=d2r(250)+j();}
+  if(mode===3){pts.B=d2r(Math.random()*360);pts.A=pts.B+d2r(30+Math.random()*120);}
+  if(mode===4){pts.A=d2r(70)+j();pts.C=d2r(340)+j();pts.D=d2r(250)+j();pts.E=d2r(160)+j();}
+  if(mode===5){pts.A=d2r(220)+j();pts.D=d2r(340)+j();pts.C=d2r(140)+j();pts.E=d2r(20)+j();}
   redraw();
 }
-function snapDiam(){ pts.A=d2r(0);pts.B=d2r(180);pts.C=d2r(270); redraw(); }
+function snapDiam(){ 
+  if(mode===2) { pts.B=d2r(270); pts.A=d2r(180); pts.C=d2r(0); }
+  redraw(); 
+}
 
 // ─── Draw helpers ────────────────────────────────────────
 const BLUE='#3b82f6', RED='#ef4444', AMB='#f59e0b', GRN='#10b981', PUR='#8b5cf6';
@@ -572,13 +591,14 @@ function clear(){ ctx.clearRect(0,0,W,H); }
 function circle(){
   ctx.beginPath(); ctx.arc(CX,CY,R,0,Math.PI*2);
   ctx.strokeStyle=greyCol(); ctx.lineWidth=2.5; ctx.stroke();
+  lbl('k', CX - R*0.75, CY - R*0.75, greyCol(), 'italic 16px');
 }
 
 function center(){
   ctx.beginPath(); ctx.arc(CX,CY,4,0,Math.PI*2);
   ctx.fillStyle=fgCol(); ctx.fill();
   lbl('O', CX-14, CY+5, fgCol(), '13px');
-  // Radius handle: small draggable diamond
+  // Radius handle
   const rh=6;
   ctx.save();
   ctx.translate(_Rx,_Ry);
@@ -590,7 +610,6 @@ function center(){
   ctx.strokeStyle=isDark()?'#1e293b':'#fff';
   ctx.lineWidth=1.5; ctx.stroke();
   ctx.restore();
-  // Дотирана линия O→радиус (само ако не е на стандартната позиция)
   ctx.beginPath();
   ctx.setLineDash([3,4]);
   ctx.moveTo(CX,CY); ctx.lineTo(_Rx,_Ry);
@@ -599,16 +618,26 @@ function center(){
   lbl('r', (_Rx+CX)/2+8, (_Ry+CY)/2-6, isDark()?'#475569':'#94a3b8', '11px');
 }
 
-function seg(p1,p2,col,dash,lw){
+function seg(p1,p2,col,dash,lw, glowId){
+  if(activeGlow === glowId) {
+     ctx.save(); ctx.beginPath(); ctx.moveTo(p1.x,p1.y); ctx.lineTo(p2.x,p2.y);
+     ctx.strokeStyle=col; ctx.globalAlpha = 0.4 * glowPhase; ctx.lineWidth=(lw||2)+8; ctx.stroke(); ctx.restore();
+  }
   ctx.save(); ctx.beginPath(); ctx.moveTo(p1.x,p1.y); ctx.lineTo(p2.x,p2.y);
   ctx.strokeStyle=col; ctx.lineWidth=lw||2;
   if(dash) ctx.setLineDash([6,5]);
   ctx.stroke(); ctx.setLineDash([]); ctx.restore();
 }
 
-function fullLine(p1,p2,col,dash){
+function fullLine(p1,p2,col,dash, glowId){
   const dx=p2.x-p1.x, dy=p2.y-p1.y;
   const t=3000;
+  if(activeGlow === glowId) {
+     ctx.save(); ctx.beginPath();
+     ctx.moveTo(p1.x-dx*t, p1.y-dy*t); ctx.lineTo(p1.x+dx*t, p1.y+dy*t);
+     ctx.strokeStyle=col; ctx.globalAlpha = 0.4 * glowPhase; ctx.lineWidth=10; ctx.stroke();
+     ctx.restore();
+  }
   ctx.save(); ctx.beginPath();
   ctx.moveTo(p1.x-dx*t, p1.y-dy*t); ctx.lineTo(p1.x+dx*t, p1.y+dy*t);
   ctx.strokeStyle=col; ctx.lineWidth=1.8;
@@ -616,13 +645,19 @@ function fullLine(p1,p2,col,dash){
   ctx.stroke(); ctx.setLineDash([]); ctx.restore();
 }
 
-/** Draw arc on the circle CCW from startRad to endRad, labelled */
-function arc(startRad, endRad, col, thick){
+function arc(startRad, endRad, col, thick, glowId){
   let s=startRad, e=endRad;
   while(e<=s) e+=Math.PI*2;
+  
+  if(activeGlow === glowId) {
+     ctx.beginPath(); ctx.arc(CX,CY,R,s,e);
+     ctx.strokeStyle=col; ctx.globalAlpha = 0.5 * glowPhase;
+     ctx.lineWidth=(thick||5) + 12; ctx.stroke();
+     ctx.globalAlpha = 1.0;
+  }
+  
   ctx.beginPath(); ctx.arc(CX,CY,R,s,e);
   ctx.strokeStyle=col; ctx.lineWidth=thick||5; ctx.stroke();
-  // label at midpoint, outside circle
   const mid=(s+e)/2;
   const deg=(e-s)*180/Math.PI;
   const lx=CX+(R+24)*Math.cos(mid), ly=CY+(R+24)*Math.sin(mid);
@@ -631,31 +666,43 @@ function arc(startRad, endRad, col, thick){
   ctx.fillText(deg.toFixed(1)+'°', lx, ly);
 }
 
-/** Small arc symbol at vertex angle between rays to p1 and p2, with text */
-function angArc(vtx, p1, p2, col, txt, rr){
+function angArc(vtx, p1, p2, col, txt, rr, glowId){
   const r = rr || 22;
   const a1=Math.atan2(p1.y-vtx.y, p1.x-vtx.x);
   const a2=Math.atan2(p2.y-vtx.y, p2.x-vtx.x);
-  // always draw CCW from a1 to a2
-  ctx.beginPath(); ctx.arc(vtx.x,vtx.y,r,a1,a2);
-  ctx.strokeStyle=col; ctx.lineWidth=2; ctx.stroke();
+  
   let mid=(a1+a2)/2;
-  // if arc > π, mid is on wrong side
   let span=a2-a1; while(span<0)span+=Math.PI*2;
   if(span>Math.PI) mid+=Math.PI;
+  
+  if(activeGlow === glowId) {
+     ctx.save();
+     ctx.beginPath(); 
+     ctx.moveTo(vtx.x, vtx.y); 
+     ctx.arc(vtx.x,vtx.y,r,a1,a2); 
+     ctx.closePath();
+     ctx.fillStyle=col; ctx.globalAlpha = 0.3 * glowPhase; ctx.fill();
+     ctx.restore();
+  }
+
+  ctx.beginPath(); ctx.arc(vtx.x,vtx.y,r,a1,a2);
+  ctx.strokeStyle=col; ctx.lineWidth=2; ctx.stroke();
+  
   ctx.font='bold 11px Segoe UI,sans-serif';
   ctx.fillStyle=col; ctx.textAlign='center'; ctx.textBaseline='middle';
   ctx.fillText(txt, vtx.x+(r+14)*Math.cos(mid), vtx.y+(r+14)*Math.sin(mid));
 }
 
-function pt(name, col){
-  const x=px(name), y=py(name);
-  ctx.beginPath(); ctx.arc(x,y,7,0,Math.PI*2);
+function ptObjLabel(name, ptObj, col){
+  ctx.beginPath(); ctx.arc(ptObj.x, ptObj.y, 7, 0, Math.PI*2);
   ctx.fillStyle=col; ctx.fill();
   ctx.strokeStyle=isDark()?'#1e293b':'#fff'; ctx.lineWidth=2.5; ctx.stroke();
-  // label outward
-  const dx=x-CX, dy=y-CY, len=Math.sqrt(dx*dx+dy*dy);
-  lbl(name, x+(dx/len)*20, y+(dy/len)*20, col, 'bold 14px');
+  const dx=ptObj.x-CX, dy=ptObj.y-CY, len=Math.sqrt(dx*dx+dy*dy);
+  lbl(name, ptObj.x+(dx/len)*20, ptObj.y+(dy/len)*20, col, 'bold 14px');
+}
+
+function pt(name, col){
+  ptObjLabel(name, pxy(name), col);
 }
 
 function lbl(txt,x,y,col,font){
@@ -670,238 +717,410 @@ function dot(x,y,col,r){
   ctx.strokeStyle=isDark()?'#1e293b':'#fff'; ctx.lineWidth=2; ctx.stroke();
 }
 
+/** Функция за рисуване на интерактивни текстови обозначения със стрелки */
+let annotationBoxes = [];
+let hoveredAnnotation = null;
+
+function drawAnnotationBase(lines, textX, textY, targets, col, targetId) {
+  ctx.font = '13px Segoe UI, sans-serif';
+  let maxWidth = 0;
+  for(let line of lines) maxWidth = Math.max(maxWidth, ctx.measureText(line).width);
+  
+  const pad = 8;
+  const bgW = maxWidth + pad*2;
+  const bgH = lines.length * 16 + pad*2;
+  
+  // Prevent clipping off-screen
+  let clampedX = Math.max(bgW/2 + 10, Math.min(W - bgW/2 - 10, textX));
+  let clampedY = Math.max(bgH/2 + 10, Math.min(H - bgH/2 - 10, textY));
+
+  const bgX = clampedX - bgW/2;
+  const bgY = clampedY - bgH/2;
+
+  const isHovered = (activeGlow === targetId) || (hoveredAnnotation === targetId && targetId != null);
+
+  // Draw arrows
+  ctx.strokeStyle = col;
+  ctx.lineWidth = isHovered ? 2.5 : 1.5;
+  if (isHovered && activeGlow === targetId) {
+      ctx.shadowColor = col;
+      ctx.shadowBlur = 8 * glowPhase;
+  }
+  for (let t of targets) {
+     ctx.beginPath();
+     ctx.moveTo(clampedX, clampedY);
+     ctx.lineTo(t.x, t.y);
+     const angle = Math.atan2(t.y - clampedY, t.x - clampedX);
+     ctx.lineTo(t.x - 8 * Math.cos(angle - Math.PI/6), t.y - 8 * Math.sin(angle - Math.PI/6));
+     ctx.moveTo(t.x, t.y);
+     ctx.lineTo(t.x - 8 * Math.cos(angle + Math.PI/6), t.y - 8 * Math.sin(angle + Math.PI/6));
+     ctx.stroke();
+  }
+  ctx.shadowBlur = 0;
+
+  // Draw text background
+  ctx.fillStyle = isDark() ? 'rgba(30,41,59,0.95)' : 'rgba(255,255,255,0.95)';
+  ctx.beginPath(); 
+  if (ctx.roundRect) ctx.roundRect(bgX, bgY, bgW, bgH, 6);
+  else ctx.rect(bgX, bgY, bgW, bgH);
+  
+  if (isHovered && activeGlow === targetId) {
+     ctx.shadowColor = col;
+     ctx.shadowBlur = 12 * glowPhase;
+  } else if (isHovered) {
+     ctx.shadowColor = col;
+     ctx.shadowBlur = 6;
+  }
+  ctx.fill();
+  ctx.shadowBlur = 0;
+  
+  ctx.strokeStyle = col; 
+  ctx.lineWidth = (isHovered && activeGlow === targetId) ? (1.2 + 1.5*glowPhase) : (isHovered ? 2 : 1.2); 
+  ctx.stroke();
+
+  // Draw text
+  ctx.fillStyle = isDark() ? '#f8fafc' : '#0f172a';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  const startY = clampedY - (lines.length - 1) * 8;
+  for(let i=0; i<lines.length; i++) {
+     ctx.fillText(lines[i], clampedX, startY + i*16);
+  }
+  
+  if (targetId) {
+     annotationBoxes.push({x: bgX, y: bgY, w: bgW, h: bgH, id: targetId});
+  }
+}
+
+function findAnnotationHit(x, y) {
+  for (let box of annotationBoxes) {
+    if (x >= box.x && x <= box.x + box.w && y >= box.y && y <= box.y + box.h) return box.id;
+  }
+  return null;
+}
+
 // ─── Mode draws ──────────────────────────────────────────
 function drawMode1(){
   const A=pxy('A'), B=pxy('B'), O={x:CX,y:CY};
   const arcDeg = arcCCW(pts.A,pts.B);
-  arc(pts.A, pts.A+d2r(arcDeg), BLUE, 5);
-  seg(O,A,BLUE); seg(O,B,BLUE);
-  angArc(O,A,B,BLUE,arcDeg.toFixed(1)+'°');
+  
+  arc(pts.A, pts.A+d2r(arcDeg), BLUE, 5, 'm1_arc');
+  seg(O,A,BLUE, false, 2, 'm1_ang'); 
+  seg(O,B,BLUE, false, 2, 'm1_ang');
+  angArc(O,A,B,BLUE,arcDeg.toFixed(1)+'°', 22, 'm1_ang');
   pt('A',BLUE); pt('B',BLUE);
+
+  // Annotations
+  const chk = document.getElementById('chkAnn');
+  if(chk && chk.checked) {
+     let mid = pts.A + d2r(arcDeg)/2;
+     let tX = CX + R*Math.cos(mid), tY = CY + R*Math.sin(mid);
+     drawAnnotationBase(['принадлежаща','дъга AB'], CX+(R+70)*Math.cos(mid), CY+(R+70)*Math.sin(mid), [{x:tX, y:tY}], BLUE, 'm1_arc');
+     drawAnnotationBase(['централен', 'ъгъл ∢AOB'], CX, CY+55, [{x:CX, y:CY}], BLUE, 'm1_ang');
+  }
 }
 
 function drawMode2(){
   const A=pxy('A'), B=pxy('B'), C=pxy('C'), O={x:CX,y:CY};
-  const ccw=arcCCW(pts.A,pts.B);
-  const cInCCW = inCCW(pts.A,pts.B,pts.C);
-  const arcDeg  = cInCCW ? 360-ccw : ccw;
+  const ccw=arcCCW(pts.A,pts.C);
+  const bInCCW = inCCW(pts.A,pts.C,pts.B);
+  const arcDeg  = bInCCW ? 360-ccw : ccw;
   const isT = Math.abs(arcDeg-180)<1.5;
   const col = isT ? GRN : RED;
-  // arc (the one not containing C)
-  if(cInCCW){ arc(pts.B, pts.B+d2r(360-ccw), col, 5); }
-  else       { arc(pts.A, pts.A+d2r(ccw),     col, 5); }
-  if(isT) seg(A,B,GRN,true);
-  if(document.getElementById('chkC').checked){
-    seg(O,A,BLUE,true); seg(O,B,BLUE,true);
-    angArc(O,A,B,BLUE,arcDeg.toFixed(1)+'°',28);
+  
+  // arc (the one not containing B)
+  if(bInCCW){ arc(pts.C, pts.C+d2r(360-ccw), col, 5, 'm2_arc'); }
+  else       { arc(pts.A, pts.A+d2r(ccw),     col, 5, 'm2_arc'); }
+  
+  if(isT) seg(A,C,GRN,true);
+  
+  const chkAnn = document.getElementById('chkAnn');
+  const showAnn = chkAnn && chkAnn.checked;
+  const showCen = document.getElementById('chkC').checked;
+
+  if(showCen || showAnn){
+    seg(O,A,BLUE,true, showCen ? 2 : 1, 'm2_angO'); 
+    seg(O,C,BLUE,true, showCen ? 2 : 1, 'm2_angO');
+    if(showCen) angArc(O,A,C,BLUE,arcDeg.toFixed(1)+'°',28, 'm2_angO');
   }
-  seg(C,A,col); seg(C,B,col);
-  angArc(C,A,B,col,(arcDeg/2).toFixed(1)+'°');
-  pt('A',col); pt('B',col); pt('C',col);
+  
+  seg(B,A,col, false, 2, 'm2_angB'); 
+  seg(B,C,col, false, 2, 'm2_angB');
+  angArc(B,A,C,col,(arcDeg/2).toFixed(1)+'°', 22, 'm2_angB');
+  pt('A',col); pt('C',col); pt('B',col);
   document.getElementById('thint').classList.toggle('on',isT);
+
+  // Annotations
+  if(showAnn) {
+     const bDir = Math.atan2(B.y-CY, B.x-CX);
+     drawAnnotationBase(['вписан ъгъл','∢ABC'], CX+(R+65)*Math.cos(bDir), CY+(R+65)*Math.sin(bDir), [{x:B.x, y:B.y}], RED, 'm2_angB');
+     drawAnnotationBase(['съответен','централен','ъгъл ∢AOC'], CX, CY+55, [{x:CX, y:CY}], BLUE, 'm2_angO');
+     let arcS = bInCCW ? pts.C : pts.A;
+     let arcE = bInCCW ? pts.C + d2r(360-ccw) : pts.A + d2r(ccw);
+     let mid = (arcS + arcE)/2;
+     let tX = CX + R*Math.cos(mid), tY = CY + R*Math.sin(mid);
+     drawAnnotationBase(['принадлежаща','дъга AC'], CX+(R+70)*Math.cos(mid), CY+(R+70)*Math.sin(mid), [{x:tX, y:tY}], col, 'm2_arc');
+  }
 }
 
 function drawMode3(){
-  const A=pxy('A'), B=pxy('B'), O={x:CX,y:CY};
+  const B=pxy('B'), A=pxy('A'), O={x:CX,y:CY};
 
-  // Посока на допирателната в A: перпендикулярна на OA
-  const dx=A.x-CX, dy=A.y-CY, len=Math.sqrt(dx*dx+dy*dy);
-  const tx=-dy/len, ty=dx/len;  // единичен вектор по допирателната
+  // Посока на допирателната в B
+  const dx=B.x-CX, dy=B.y-CY, len=Math.sqrt(dx*dx+dy*dy);
+  const tx=-dy/len, ty=dx/len;
 
-  // Дъга AB — тази, която е "пред" периферния ъгъл.
-  // По теоремата: периферният ъгъл = дъга / 2, дъгата е от страната
-  // към която "гледа" ъгълът (определена от знака на cross продукта).
-  const chDx0 = B.x-A.x, chDy0 = B.y-A.y;
-  const cross0 = chDx0*ty - chDy0*tx;
-  // Ако cross0 > 0: B е от лявата страна на допирателната (CCW посока)
-  // Дъгата е CCW от A до B ако cross0 > 0, иначе CW (= CCW от B до A)
-  const ccw = arcCCW(pts.A, pts.B);   // CCW от A до B
-  const cww  = 360 - ccw;             // CW  от A до B
-  // Избираме дъгата която е от страната на ъгъла:
-  // cross0 > 0 → B е в CCW посока → дъгата е CCW (малката ако ccw<180, иначе голямата)
-  let arcDeg, arcStart, arcSpan;
-  if(cross0 > 0){
-    arcDeg = ccw; arcStart = pts.A; arcSpan = d2r(ccw);
-  } else {
-    arcDeg = cww; arcStart = pts.B; arcSpan = d2r(cww);
-  }
-  arc(arcStart, arcStart + arcSpan, AMB, 5);
-
-  // ── Централен ъгъл (по избор) ──
-  const showCentral3 = document.getElementById('chkT3').checked;
-  if(showCentral3){
-    seg(O, A, '#3b82f6', true, 1.8);
-    seg(O, B, '#3b82f6', true, 1.8);
-    // Дъгичка на централния ъгъл при O
-    const oA = {x:A.x-CX, y:A.y-CY};
-    const oB = {x:B.x-CX, y:B.y-CY};
-    const rO = 28;
-    let angA_rad = Math.atan2(oA.y, oA.x);
-    let angB_rad = Math.atan2(oB.y, oB.x);
-    let spanO = angB_rad - angA_rad;
-    while(spanO < 0) spanO += 2*Math.PI;
-    if(spanO > Math.PI){
-      ctx.beginPath(); ctx.arc(CX, CY, rO, angB_rad, angA_rad);
-    } else {
-      ctx.beginPath(); ctx.arc(CX, CY, rO, angA_rad, angB_rad);
-    }
-    ctx.strokeStyle = '#3b82f6'; ctx.lineWidth = 2; ctx.stroke();
-    const midO = spanO > Math.PI
-      ? angB_rad + (2*Math.PI - spanO)/2
-      : angA_rad + spanO/2;
-    ctx.font='bold 12px Segoe UI,sans-serif'; ctx.fillStyle='#3b82f6';
-    ctx.textAlign='center'; ctx.textBaseline='middle';
-    ctx.fillText(arcDeg.toFixed(1)+'°',
-      CX+(rO+16)*Math.cos(midO), CY+(rO+16)*Math.sin(midO));
-    // Надпис O
-    lbl('O', CX-14, CY+5, '#3b82f6', '13px');
-  }
-
-  // ── Хорда AB (оранжева) ──
-  seg(A, B, AMB, false, 2);
-
-  // ── Допирателна ──
-  fullLine(A, {x:A.x+tx, y:A.y+ty}, AMB);
-
-  // ── Дъгичка на периферния ъгъл при A ──
-  // Ъгълът е между хордата AB и допирателната.
-  // Посока на хордата от A: A→B
-  const chDx = B.x-A.x, chDy = B.y-A.y;
-  // Посока на допирателната от A в посоката, която "гледа" ъгъла
-  // (взимаме тази от двете посоки на допирателната, която е от страна на B)
-  // Знак: ако cross(chord, tangent) > 0 → използваме (tx,ty), иначе (-tx,-ty)
+  const chDx = A.x-B.x, chDy = A.y-B.y;
   const cross = chDx*ty - chDy*tx;
-  const signT = cross > 0 ? 1 : -1;
-  const tanPt = {x: A.x + signT*tx*55, y: A.y + signT*ty*55};
 
-  const rA = 26;
+  const ccw = arcCCW(pts.B, pts.A);
+  const cww  = 360 - ccw;
+
+  let arcDeg, arcStart, arcSpan;
+  if(cross > 0){
+    arcDeg = ccw; arcStart = pts.B; arcSpan = d2r(ccw);
+  } else {
+    arcDeg = cww; arcStart = pts.A; arcSpan = d2r(cww);
+  }
+  arc(arcStart, arcStart + arcSpan, AMB, 5, 'm3_arc');
+
+  const showCentral3 = document.getElementById('chkT3').checked;
+  const chkAnn = document.getElementById('chkAnn');
+  const showAnn = chkAnn && chkAnn.checked;
+
+  if(showCentral3 || showAnn){
+    seg(O, B, '#3b82f6', true, showCentral3 ? 1.8 : 1, 'm3_angO');
+    seg(O, A, '#3b82f6', true, showCentral3 ? 1.8 : 1, 'm3_angO');
+    
+    if(showCentral3) {
+      const oB = {x:B.x-CX, y:B.y-CY};
+      const oA = {x:A.x-CX, y:A.y-CY};
+      const rO = 28;
+      let angB_rad = Math.atan2(oB.y, oB.x);
+      let angA_rad = Math.atan2(oA.y, oA.x);
+      let spanO = angA_rad - angB_rad;
+      while(spanO < 0) spanO += 2*Math.PI;
+      
+      ctx.beginPath();
+      if(spanO > Math.PI){
+        ctx.arc(CX, CY, rO, angA_rad, angB_rad);
+      } else {
+        ctx.arc(CX, CY, rO, angB_rad, angA_rad);
+      }
+      
+      if (activeGlow === 'm3_angO') {
+        ctx.save();
+        ctx.lineTo(CX, CY); ctx.closePath();
+        ctx.fillStyle = '#3b82f6'; ctx.globalAlpha = 0.3 * glowPhase; ctx.fill();
+        ctx.restore();
+      }
+      
+      ctx.strokeStyle = '#3b82f6'; ctx.lineWidth = 2; ctx.stroke();
+      
+      const midO = spanO > Math.PI
+        ? angA_rad + (2*Math.PI - spanO)/2
+        : angB_rad + spanO/2;
+      ctx.font='bold 12px Segoe UI,sans-serif'; ctx.fillStyle='#3b82f6';
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(arcDeg.toFixed(1)+'°',
+        CX+(rO+16)*Math.cos(midO), CY+(rO+16)*Math.sin(midO));
+      lbl('O', CX-14, CY+5, '#3b82f6', '13px');
+    }
+  }
+
+  seg(B, A, AMB, false, 2, 'm3_angB');
+  fullLine(B, {x:B.x+tx, y:B.y+ty}, AMB, false, 'm3_angB');
+
+  const signT = cross > 0 ? 1 : -1;
+  const C = {x: B.x + signT*tx*65, y: B.y + signT*ty*65};
+
+  const rB = 26;
   const angChord = Math.atan2(chDy, chDx);
   const angTan   = Math.atan2(signT*ty, signT*tx);
-  // Рисуваме дъгичката CCW от допирателната до хордата
-  let spanA = angChord - angTan;
-  while(spanA < 0) spanA += 2*Math.PI;
-  if(spanA > Math.PI) spanA -= 2*Math.PI; // взимаме острия ъгъл
+  
+  let spanB = angChord - angTan;
+  while(spanB < 0) spanB += 2*Math.PI;
+  if(spanB > Math.PI) spanB -= 2*Math.PI;
   ctx.beginPath();
-  if(spanA >= 0){
-    ctx.arc(A.x, A.y, rA, angTan, angTan+spanA);
+  if(spanB >= 0){
+    ctx.arc(B.x, B.y, rB, angTan, angTan+spanB);
   } else {
-    ctx.arc(A.x, A.y, rA, angTan+spanA, angTan);
+    ctx.arc(B.x, B.y, rB, angTan+spanB, angTan);
   }
+  
+  if (activeGlow === 'm3_angB') {
+     ctx.save();
+     ctx.lineTo(B.x, B.y); ctx.closePath();
+     ctx.fillStyle = AMB; ctx.globalAlpha = 0.3 * glowPhase; ctx.fill();
+     ctx.restore();
+  }
+  
   ctx.strokeStyle = AMB; ctx.lineWidth = 2; ctx.stroke();
-  // Надпис
-  const midA = spanA >= 0 ? angTan + spanA/2 : angTan + spanA/2;
+  const midB = spanB >= 0 ? angTan + spanB/2 : angTan + spanB/2;
   ctx.font='bold 11px Segoe UI,sans-serif'; ctx.fillStyle=AMB;
   ctx.textAlign='center'; ctx.textBaseline='middle';
   ctx.fillText((arcDeg/2).toFixed(1)+'°',
-    A.x+(rA+14)*Math.cos(midA), A.y+(rA+14)*Math.sin(midA));
+    B.x+(rB+14)*Math.cos(midB), B.y+(rB+14)*Math.sin(midB));
 
-  // ── Точки ──
   pt('A', AMB); pt('B', AMB);
-  // Надпис "t" по допирателната
-  ctx.font='italic 13px Georgia,serif'; ctx.fillStyle=AMB;
-  ctx.textAlign='left'; ctx.textBaseline='middle';
-  ctx.fillText('t', A.x+signT*tx*72+5, A.y+signT*ty*72);
+  dot(C.x, C.y, AMB, 4);
+  lbl('C', C.x + signT*tx*15, C.y + signT*ty*15, AMB, 'bold 14px');
+
+  // Annotations
+  if(showAnn) {
+     const bDir = Math.atan2(B.y-CY, B.x-CX);
+     drawAnnotationBase(['∢ABC е','периферен ъгъл'], CX+(R+75)*Math.cos(bDir), CY+(R+75)*Math.sin(bDir), [{x:B.x, y:B.y}], AMB, 'm3_angB');
+     drawAnnotationBase(['∢AOB е съответен','централен ъгъл'], CX-10, CY+55, [{x:CX, y:CY}], BLUE, 'm3_angO');
+     let mid = arcStart + arcSpan/2;
+     let tX = CX + R*Math.cos(mid), tY = CY + R*Math.sin(mid);
+     drawAnnotationBase(['дъгата AB е','принадлежаща дъга'], CX+(R+75)*Math.cos(mid), CY+(R+75)*Math.sin(mid), [{x:tX, y:tY}], AMB, 'm3_arc');
+  }
+}
+
+function getMode4Data() {
+  const A=pxy('A'), C=pxy('C'), D=pxy('D'), E=pxy('E');
+  const dir1={x:D.x-A.x,y:D.y-A.y}, dir2={x:E.x-C.x,y:E.y-C.y};
+  const B=isect(A,dir1,C,dir2);
+
+  const ac_ccw=arcCCW(pts.A,pts.C);
+  const d_in_ac=inCCW(pts.A,pts.C,pts.D), e_in_ac=inCCW(pts.A,pts.C,pts.E);
+  const acDeg = (d_in_ac || e_in_ac) ? 360-ac_ccw : ac_ccw;
+
+  const de_ccw=arcCCW(pts.D,pts.E);
+  const a_in_de=inCCW(pts.D,pts.E,pts.A), c_in_de=inCCW(pts.D,pts.E,pts.C);
+  const deDeg = (a_in_de || c_in_de) ? 360-de_ccw : de_ccw;
+
+  return { A, C, D, E, B, acDeg, deDeg, ac_ccw, d_in_ac, e_in_ac, de_ccw, a_in_de, c_in_de, ang: (acDeg+deDeg)/2 };
 }
 
 function drawMode4(){
-  const A=pxy('A'), B=pxy('B'), C=pxy('C'), D=pxy('D');
-  const O={x:CX,y:CY};
-  seg(A,C,greyCol()); seg(B,D,greyCol());
-  const dir1={x:C.x-A.x,y:C.y-A.y}, dir2={x:D.x-B.x,y:D.y-B.y};
-  const M=isect(A,dir1,B,dir2);
-  // arcs
-  const adDeg=arcShort(pts.A,pts.D);
-  const bcDeg=arcShort(pts.B,pts.C);
-  const adCCW=arcCCW(pts.A,pts.D);
-  if(adCCW<=180) arc(pts.A,pts.A+d2r(adCCW),GRN,5);
-  else           arc(pts.D,pts.D+d2r(360-adCCW),GRN,5);
-  const bcCCW=arcCCW(pts.B,pts.C);
-  if(bcCCW<=180) arc(pts.B,pts.B+d2r(bcCCW),BLUE,5);
-  else           arc(pts.C,pts.C+d2r(360-bcCCW),BLUE,5);
-  if(M){
-    angArc(M,D,A,GRN,((adDeg+bcDeg)/2).toFixed(1)+'°',24);
-    dot(M.x,M.y,GRN);
-    lbl('M',M.x+16,M.y-8,GRN,'bold 13px');
+  const d = getMode4Data();
+  seg(d.A, d.D, greyCol(), false, 2, 'm4_ang'); 
+  seg(d.C, d.E, greyCol(), false, 2, 'm4_ang');
+
+  if(d.d_in_ac || d.e_in_ac) arc(pts.C,pts.C+d2r(360-d.ac_ccw),GRN,5, 'm4_arcs');
+  else                       arc(pts.A,pts.A+d2r(d.ac_ccw),GRN,5, 'm4_arcs');
+
+  if(d.a_in_de || d.c_in_de) arc(pts.E,pts.E+d2r(360-d.de_ccw),BLUE,5, 'm4_arcs');
+  else                       arc(pts.D,pts.D+d2r(d.de_ccw),BLUE,5, 'm4_arcs');
+
+  if(d.B){
+    angArc(d.B, d.C, d.A, GRN, d.ang.toFixed(1)+'°', 24, 'm4_ang');
+    dot(d.B.x, d.B.y, GRN, 6);
+    lbl('B', d.B.x+16, d.B.y-8, GRN, 'bold 14px');
   }
-  pt('A',GRN); pt('B',BLUE); pt('C',GRN); pt('D',BLUE);
+  pt('A',GRN); pt('C',GRN); pt('D',BLUE); pt('E',BLUE);
+
+  // Annotations
+  const chkAnn = document.getElementById('chkAnn');
+  if(chkAnn && chkAnn.checked && d.B) {
+     let s1 = (d.d_in_ac || d.e_in_ac) ? pts.C : pts.A;
+     let e1 = (d.d_in_ac || d.e_in_ac) ? pts.C + d2r(360-d.ac_ccw) : pts.A + d2r(d.ac_ccw);
+     let mid1 = (s1+e1)/2;
+     let tX1 = CX + R*Math.cos(mid1), tY1 = CY + R*Math.sin(mid1);
+
+     let s2 = (d.a_in_de || d.c_in_de) ? pts.E : pts.D;
+     let e2 = (d.a_in_de || d.c_in_de) ? pts.E + d2r(360-d.de_ccw) : pts.D + d2r(d.de_ccw);
+     let mid2 = (s2+e2)/2;
+     let tX2 = CX + R*Math.cos(mid2), tY2 = CY + R*Math.sin(mid2);
+
+     drawAnnotationBase(['AC и DE -','принадлежащи дъги'], CX, 60, [{x:tX1, y:tY1}, {x:tX2, y:tY2}], GRN, 'm4_arcs');
+     drawAnnotationBase(['вътрешен', 'ъгъл ∢ABC'], d.B.x + 45, d.B.y - 45, [{x:d.B.x, y:d.B.y}], GRN, 'm4_ang');
+  }
+}
+
+function getMode5Data() {
+  const A_raw=pxy('A'), C_raw=pxy('C'), D_raw=pxy('D'), E_raw=pxy('E');
+  let A=A_raw, C=C_raw, D=D_raw, E=E_raw;
+  const dir1={x:D.x-A.x, y:D.y-A.y}, dir2={x:E.x-C.x, y:E.y-C.y};
+  const B = isect(A, dir1, C, dir2);
+  
+  if(!B) return { acDeg:0, deDeg:0, ang:0, A, C, D, E, B };
+  
+  if(Math.hypot(B.x-A.x, B.y-A.y) < Math.hypot(B.x-D.x, B.y-D.y)){ A = D_raw; D = A_raw; }
+  if(Math.hypot(B.x-C.x, B.y-C.y) < Math.hypot(B.x-E.x, B.y-E.y)){ C = E_raw; E = C_raw; }
+  
+  const angA = Math.atan2(A.y-CY, A.x-CX), angC = Math.atan2(C.y-CY, C.x-CX);
+  const angD = Math.atan2(D.y-CY, D.x-CX), angE = Math.atan2(E.y-CY, E.x-CX);
+
+  const ac_ccw = arcCCW(angA, angC);
+  const d_in_ac = inCCW(angA, angC, angD);
+  const acDeg = d_in_ac ? 360-ac_ccw : ac_ccw;
+
+  const de_ccw = arcCCW(angD, angE);
+  const a_in_de = inCCW(angD, angE, angA);
+  const deDeg = a_in_de ? 360-de_ccw : de_ccw;
+
+  const ang = Math.max(0, (acDeg - deDeg) / 2);
+  return { acDeg, deDeg, ang, A, C, D, E, B, angA, angC, angD, angE, ac_ccw, d_in_ac, de_ccw, a_in_de };
 }
 
 function drawMode5(){
-  // ══════════════════════════════════════════════════════════
-  // ГЕОМЕТРИЯ:
-  //   Две секущи от M (извън окръжността):
-  //     Секуща 1 (лилава): M — A — C  (A близо до M, C далеч)
-  //     Секуща 2 (синя):   M — B — D  (B близо до M, D далеч)
-  //
-  //   Голяма дъга (лилава): CD — тази от C до D, НЕ съдържа A и B
-  //   Малка дъга (синя):    AB — тази от A до B, НЕ съдържа C и D
-  //
-  //   Теорема: ∠M = (дъга CD − дъга AB) / 2
-  //
-  //   M = пресечна точка на правите AC и BD, от страната на A и B.
-  // ══════════════════════════════════════════════════════════
+  const d = getMode5Data();
+  if(!d.B) return;
 
-  const A=pxy('A'), B=pxy('B'), C=pxy('C'), D=pxy('D');
+  seg(d.B, d.A, PUR,  false, 2, 'm5_ang');   // B-D-A
+  seg(d.B, d.C, BLUE, false, 2, 'm5_ang');   // B-E-C
 
-  // Посока C→A: продълж. отвъд A стига до M
-  const dir1={x:A.x-C.x, y:A.y-C.y};
-  // Посока D→B: продълж. отвъд B стига до M
-  const dir2={x:B.x-D.x, y:B.y-D.y};
-  const M = isect(C, dir1, D, dir2);
+  seg(d.D, d.A, PUR,  false, 4);   // chord DA
+  seg(d.E, d.C, BLUE, false, 4);   // chord EC
 
-  if(!M) return;
+  if(d.d_in_ac){ arc(d.angC, d.angC+d2r(360-d.ac_ccw), PUR, 6, 'm5_arcs'); }
+  else         { arc(d.angA, d.angA+d2r(d.ac_ccw),     PUR, 6, 'm5_arcs'); }
 
-  // ── Секущи (от M) ──
-  seg(M, C, PUR,  false, 2);   // M—A—C  лилава
-  seg(M, D, BLUE, false, 2);   // M—B—D  синя
+  if(d.a_in_de){ arc(d.angE, d.angE+d2r(360-d.de_ccw), BLUE, 6, 'm5_arcs'); }
+  else         { arc(d.angD, d.angD+d2r(d.de_ccw),     BLUE, 6, 'm5_arcs'); }
 
-  // ── Хорди (по-дебели, върху окръжността) ──
-  seg(A, C, PUR,  false, 4);   // хорда AC
-  seg(B, D, BLUE, false, 4);   // хорда BD
-
-  // ── Дъга CD (голяма, лилава): НЕ съдържа A и B ──
-  // Проверяваме: ако A е в CCW дъгата C→D, голямата е другата
-  const cdCCW = arcCCW(pts.C, pts.D);
-  const aInCtD = inCCW(pts.C, pts.D, pts.A);
-  const cdDeg  = aInCtD ? 360-cdCCW : cdCCW;
-  if(aInCtD){ arc(pts.D, pts.D+d2r(360-cdCCW), PUR,  6); }
-  else       { arc(pts.C, pts.C+d2r(cdCCW),     PUR,  6); }
-
-  // ── Дъга AB (малка, синя): НЕ съдържа C и D ──
-  const abCCW = arcCCW(pts.A, pts.B);
-  const cInAtB = inCCW(pts.A, pts.B, pts.C);
-  const abDeg  = cInAtB ? 360-abCCW : abCCW;
-  if(cInAtB){ arc(pts.B, pts.B+d2r(360-abCCW), BLUE, 6); }
-  else       { arc(pts.A, pts.A+d2r(abCCW),     BLUE, 6); }
-
-  // ── Ъгъл при M ──
-  const ang = Math.max(0, (cdDeg - abDeg) / 2);
-
-  // Дъгичката: между лъчите M→A и M→B (двете "близки" точки)
-  const angMA2 = Math.atan2(A.y-M.y, A.x-M.x);
-  const angMB2 = Math.atan2(B.y-M.y, B.x-M.x);
+  const angMA2 = Math.atan2(d.A.y-d.B.y, d.A.x-d.B.x);
+  const angMB2 = Math.atan2(d.C.y-d.B.y, d.C.x-d.B.x);
   const rM = 32;
   let spanM = angMB2 - angMA2;
   while(spanM < -Math.PI) spanM += 2*Math.PI;
   while(spanM >  Math.PI) spanM -= 2*Math.PI;
+  
   ctx.beginPath();
-  if(spanM >= 0){ ctx.arc(M.x,M.y,rM, angMA2, angMA2+spanM); }
-  else           { ctx.arc(M.x,M.y,rM, angMA2+spanM, angMA2); }
+  if(spanM >= 0){ ctx.arc(d.B.x,d.B.y,rM, angMA2, angMA2+spanM); }
+  else          { ctx.arc(d.B.x,d.B.y,rM, angMA2+spanM, angMA2); }
+  
+  if (activeGlow === 'm5_ang') {
+     ctx.save();
+     ctx.lineTo(d.B.x, d.B.y); ctx.closePath();
+     ctx.fillStyle = PUR; ctx.globalAlpha = 0.3 * glowPhase; ctx.fill();
+     ctx.restore();
+  }
+  
   ctx.strokeStyle=PUR; ctx.lineWidth=2.5; ctx.stroke();
   const midM2 = angMA2 + spanM/2;
   ctx.font='bold 12px Segoe UI,sans-serif'; ctx.fillStyle=PUR;
   ctx.textAlign='center'; ctx.textBaseline='middle';
-  ctx.fillText(ang.toFixed(1)+'°',
-    M.x+(rM+18)*Math.cos(midM2), M.y+(rM+18)*Math.sin(midM2));
+  ctx.fillText(d.ang.toFixed(1)+'°',
+    d.B.x+(rM+18)*Math.cos(midM2), d.B.y+(rM+18)*Math.sin(midM2));
 
-  // ── Точка M ──
-  dot(M.x,M.y,PUR,6);
-  const lx = M.x < CX ? M.x-20 : M.x+14;
-  lbl('M', lx, M.y, PUR, 'bold 14px');
+  dot(d.B.x, d.B.y, PUR, 6);
+  const lx = d.B.x < CX ? d.B.x-20 : d.B.x+14;
+  lbl('B', lx, d.B.y, PUR, 'bold 14px');
 
-  // ── Точки на окръжността ──
-  pt('A',PUR); pt('C',PUR);
-  pt('B',BLUE); pt('D',BLUE);
+  ptObjLabel('A', d.A, PUR); ptObjLabel('C', d.C, BLUE);
+  ptObjLabel('D', d.D, PUR); ptObjLabel('E', d.E, BLUE);
+
+  // Annotations
+  const chkAnn = document.getElementById('chkAnn');
+  if(chkAnn && chkAnn.checked) {
+     let s1 = d.d_in_ac ? d.angC : d.angA;
+     let e1 = d.d_in_ac ? d.angC + d2r(360-d.ac_ccw) : d.angA + d2r(d.ac_ccw);
+     let mid1 = (s1+e1)/2;
+     let tX1 = CX + R*Math.cos(mid1), tY1 = CY + R*Math.sin(mid1);
+
+     let s2 = d.a_in_de ? d.angE : d.angD;
+     let e2 = d.a_in_de ? d.angE + d2r(360-d.de_ccw) : d.angD + d2r(d.de_ccw);
+     let mid2 = (s2+e2)/2;
+     let tX2 = CX + R*Math.cos(mid2), tY2 = CY + R*Math.sin(mid2);
+
+     drawAnnotationBase(['AC и DE -','принадлежащи дъги'], CX, 60, [{x:tX1, y:tY1}, {x:tX2, y:tY2}], PUR, 'm5_arcs');
+     
+     const bDir = Math.atan2(d.B.y - CY, d.B.x - CX);
+     drawAnnotationBase(['външен', 'ъгъл ∢ABC'], d.B.x + 65*Math.cos(bDir), d.B.y + 65*Math.sin(bDir), [{x:d.B.x, y:d.B.y}], PUR, 'm5_ang');
+  }
 }
 
 // ─── Update numeric values ────────────────────────────────
@@ -912,50 +1131,40 @@ function updateVals(){
     document.getElementById('v1g').textContent=v;
   }
   else if(mode===2){
-    const ccw=arcCCW(pts.A,pts.B);
-    const cInCCW=inCCW(pts.A,pts.B,pts.C);
-    const ar = cInCCW ? 360-ccw : ccw;
+    const ccw=arcCCW(pts.A,pts.C);
+    const bInCCW=inCCW(pts.A,pts.C,pts.B);
+    const ar = bInCCW ? 360-ccw : ccw;
     document.getElementById('v2a').textContent=ar.toFixed(1);
     document.getElementById('v2g').textContent=(ar/2).toFixed(1);
   }
   else if(mode===3){
-    // Трябва да знаем посоката на допирателната, за да изберем правилната дъга.
-    // Допирателната в A е перп. на OA: tx=-dy/len, ty=dx/len
-    const Ax=CX+R*Math.cos(pts.A), Ay=CY+R*Math.sin(pts.A);
     const Bx=CX+R*Math.cos(pts.B), By=CY+R*Math.sin(pts.B);
-    const dxA=Ax-CX, dyA=Ay-CY, lenA=Math.sqrt(dxA*dxA+dyA*dyA);
-    const txA=-dyA/lenA, tyA=dxA/lenA;
-    const chDx=Bx-Ax, chDy=By-Ay;
-    const cross=chDx*tyA-chDy*txA;
-    const ccw3=arcCCW(pts.A,pts.B);
+    const Ax=CX+R*Math.cos(pts.A), Ay=CY+R*Math.sin(pts.A);
+    const dxB=Bx-CX, dyB=By-CY, lenB=Math.sqrt(dxB*dxB+dyB*dyB);
+    const txB=-dyB/lenB, tyB=dxB/lenB;
+    const chDx=Ax-Bx, chDy=Ay-By;
+    const cross=chDx*tyB-chDy*txB;
+    const ccw3=arcCCW(pts.B,pts.A);
     const ar = cross>0 ? ccw3 : 360-ccw3;
     document.getElementById('v3a').textContent=ar.toFixed(1);
     document.getElementById('v3g').textContent=(ar/2).toFixed(1);
   }
   else if(mode===4){
-    const ad=arcShort(pts.A,pts.D);
-    const bc=arcShort(pts.B,pts.C);
-    document.getElementById('v4a1').textContent=ad.toFixed(1);
-    document.getElementById('v4a2').textContent=bc.toFixed(1);
-    document.getElementById('v4g').textContent=((ad+bc)/2).toFixed(1);
+    const d = getMode4Data();
+    document.getElementById('v4a1').textContent=d.acDeg.toFixed(1);
+    document.getElementById('v4a2').textContent=d.deDeg.toFixed(1);
+    document.getElementById('v4g').textContent=d.ang.toFixed(1);
   }
   else if(mode===5){
-    // Голяма дъга AC: тази, която НЕ съдържа B
-    // Голяма дъга CD (не съдържа A), малка дъга AB (не съдържа C)
-    const cdCCW5=arcCCW(pts.C,pts.D);
-    const aInCtD5=inCCW(pts.C,pts.D,pts.A);
-    const ac=aInCtD5 ? 360-cdCCW5 : cdCCW5;
-    const abCCW5=arcCCW(pts.A,pts.B);
-    const cInAtB5=inCCW(pts.A,pts.B,pts.C);
-    const bd=cInAtB5 ? 360-abCCW5 : abCCW5;
-    const ang=Math.max(0,(ac-bd)/2);
-    document.getElementById('v5a1').textContent=ac.toFixed(1);
-    document.getElementById('v5a2').textContent=bd.toFixed(1);
-    document.getElementById('v5g').textContent=ang.toFixed(1);
+    const d = getMode5Data();
+    document.getElementById('v5a1').textContent=d.acDeg.toFixed(1);
+    document.getElementById('v5a2').textContent=d.deDeg.toFixed(1);
+    document.getElementById('v5g').textContent=d.ang.toFixed(1);
   }
 }
 
 function redraw(){
+  annotationBoxes = [];
   clear(); if(mode===0) return;
   circle(); center();
   if(mode===1) drawMode1();
@@ -976,35 +1185,79 @@ function cPos(e){
   return {x:cl-r.left, y:ct-r.top};
 }
 function findHit(x,y){
-  // Radius handle first
   if(Math.hypot(_Rx-x,_Ry-y)<HIT) return '_R';
   for(const n of Object.keys(pts))
     if(Math.hypot(px(n)-x, py(n)-y)<HIT) return n;
   return null;
 }
-cv.addEventListener('mousedown', e=>{const p=cPos(e);dragging=findHit(p.x,p.y);if(dragging)cv.style.cursor='grabbing';});
+
+cv.addEventListener('mousedown', e=>{
+  const p=cPos(e);
+  const annHit = findAnnotationHit(p.x, p.y);
+  if (annHit) {
+      startGlow(annHit);
+      return;
+  }
+  dragging=findHit(p.x,p.y);
+  if(dragging) cv.style.cursor='grabbing';
+});
+
 cv.addEventListener('mousemove', e=>{
   const p=cPos(e);
+  const annHit = findAnnotationHit(p.x, p.y);
+  
+  if (annHit !== hoveredAnnotation) {
+      hoveredAnnotation = annHit;
+      if (!dragging) redraw(); 
+  }
+
   if(dragging==='_R'){
-    // Ограничаваме радиуса: мин 60px, макс 45% от min(W,H)
     const minR=60, maxR=Math.min(W,H)*0.45;
     const d=Math.hypot(p.x-CX,p.y-CY);
     if(d>=minR && d<=maxR){ _Rx=p.x; _Ry=p.y; }
     else if(d<minR){ const a=Math.atan2(p.y-CY,p.x-CX); _Rx=CX+minR*Math.cos(a); _Ry=CY+minR*Math.sin(a); }
     else           { const a=Math.atan2(p.y-CY,p.x-CX); _Rx=CX+maxR*Math.cos(a); _Ry=CY+maxR*Math.sin(a); }
-    resetPts();  // преизчисли точките с новия R
-  } else if(dragging){ pts[dragging]=Math.atan2(p.y-CY,p.x-CX); redraw(); }
-  else cv.style.cursor=findHit(p.x,p.y)?'grab':'default';
+    resetPts();
+  } else if(dragging){ 
+    pts[dragging]=Math.atan2(p.y-CY,p.x-CX); redraw(); 
+  } else {
+    if (annHit) {
+       cv.style.cursor = 'pointer';
+    } else if (findHit(p.x, p.y)) {
+       cv.style.cursor = 'grab';
+    } else {
+       cv.style.cursor = 'default';
+    }
+  }
 });
+
 cv.addEventListener('mouseup',  ()=>{dragging=null;cv.style.cursor='default';});
-cv.addEventListener('mouseleave',()=>{ dragging=null; });
-cv.addEventListener('touchstart', e=>{e.preventDefault();const p=cPos(e);dragging=findHit(p.x,p.y);},{passive:false});
-cv.addEventListener('touchmove',  e=>{e.preventDefault();if(!dragging)return;const p=cPos(e);if(dragging==='_R'){
+cv.addEventListener('mouseleave',()=>{ dragging=null; hoveredAnnotation=null; redraw(); });
+
+cv.addEventListener('touchstart', e=>{
+  const p=cPos(e);
+  const annHit = findAnnotationHit(p.x, p.y);
+  if (annHit) {
+      e.preventDefault();
+      startGlow(annHit);
+      return;
+  }
+  dragging=findHit(p.x,p.y);
+  if(dragging) e.preventDefault();
+},{passive:false});
+
+cv.addEventListener('touchmove',  e=>{
+  if(!dragging) return;
+  e.preventDefault();
+  const p=cPos(e);
+  if(dragging==='_R'){
     const d=Math.hypot(p.x-CX,p.y-CY),minR=60,maxR=Math.min(W,H)*0.45;
     if(d>=minR&&d<=maxR){_Rx=p.x;_Ry=p.y;}
     else{const a=Math.atan2(p.y-CY,p.x-CX),r=Math.min(Math.max(d,minR),maxR);_Rx=CX+r*Math.cos(a);_Ry=CY+r*Math.sin(a);}
     resetPts();
-  }else if(dragging){pts[dragging]=Math.atan2(p.y-CY,p.x-CX);redraw();}},{passive:false});
+  }else if(dragging){pts[dragging]=Math.atan2(p.y-CY,p.x-CX);redraw();}
+},{passive:false});
+
 cv.addEventListener('touchend',   ()=>{dragging=null;});
 
 // ─── Mode switching ──────────────────────────────────────
@@ -1029,18 +1282,10 @@ function setMode(m){
   if(m!==3) document.getElementById('chkT3').checked=false;
   document.getElementById('thint').classList.remove('on');
   resetPts();
-  // Re-render MathJax for the newly visible content
-  if(window.MathJax && MathJax.typesetPromise){
-    MathJax.typesetPromise([document.getElementById('c'+m)]).catch(e=>console.warn(e));
-  }
 }
 
 window.addEventListener('load', ()=>{
   resize();
-  // Initial MathJax typeset for c0
-  if(window.MathJax && MathJax.typesetPromise){
-    MathJax.typesetPromise([document.getElementById('theory')]).catch(e=>console.warn(e));
-  }
 });
 </script>
 </body>
