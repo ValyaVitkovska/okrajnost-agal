@@ -558,6 +558,11 @@ function startGlow(id) {
 // ─── Points (angles in radians) + radius handle ──────────
 const pts = {};
 let _Rx = 0, _Ry = 0;  // позиция на радиусната дръжка
+
+// Променливи за запазване на ръчно зададените позиции на текстовите табелки
+let customAnnPos = {};
+let dragAnnOffset = {x: 0, y: 0};
+
 function initRadiusHandle(){ _Rx = CX + R; _Ry = CY; }
 function px(n){ return CX + R*Math.cos(pts[n]); }
 function py(n){ return CY + R*Math.sin(pts[n]); }
@@ -575,6 +580,7 @@ function resetPts(){
   for (let k in pts) delete pts[k];
   if(DEFS[mode]) Object.assign(pts,DEFS[mode]); 
   if(_Rx===0)initRadiusHandle(); 
+  customAnnPos = {}; // Нулиране на персонализираните позиции на текстовете
   redraw(); 
 }
 function randPts(){
@@ -585,6 +591,7 @@ function randPts(){
   if(mode===3){pts.B=d2r(Math.random()*360);pts.A=pts.B+d2r(30+Math.random()*120);}
   if(mode===4){pts.A=d2r(70)+j();pts.C=d2r(340)+j();pts.D=d2r(250)+j();pts.E=d2r(160)+j();}
   if(mode===5){pts.A=d2r(220)+j();pts.D=d2r(340)+j();pts.C=d2r(140)+j();pts.E=d2r(20)+j();}
+  customAnnPos = {}; // Също се нулират при "Случаен"
   redraw();
 }
 function snapDiam(){ 
@@ -733,6 +740,13 @@ let annotationBoxes = [];
 let hoveredAnnotation = null;
 
 function drawAnnotationBase(lines, textX, textY, targets, col, targetId) {
+  let cx = textX, cy = textY;
+  // Ако потребителят е преместил табелката, използваме новите й координати
+  if (targetId && customAnnPos[targetId]) {
+      cx = customAnnPos[targetId].x;
+      cy = customAnnPos[targetId].y;
+  }
+
   ctx.font = '13px Segoe UI, sans-serif';
   let maxWidth = 0;
   for(let line of lines) maxWidth = Math.max(maxWidth, ctx.measureText(line).width);
@@ -742,15 +756,15 @@ function drawAnnotationBase(lines, textX, textY, targets, col, targetId) {
   const bgH = lines.length * 16 + pad*2;
   
   // Prevent clipping off-screen
-  let clampedX = Math.max(bgW/2 + 10, Math.min(W - bgW/2 - 10, textX));
-  let clampedY = Math.max(bgH/2 + 10, Math.min(H - bgH/2 - 10, textY));
+  let clampedX = Math.max(bgW/2 + 10, Math.min(W - bgW/2 - 10, cx));
+  let clampedY = Math.max(bgH/2 + 10, Math.min(H - bgH/2 - 10, cy));
 
   const bgX = clampedX - bgW/2;
   const bgY = clampedY - bgH/2;
 
   const isHovered = (activeGlow === targetId) || (hoveredAnnotation === targetId && targetId != null);
 
-  // Draw arrows
+  // Draw arrows (те автоматично ще сочат от новата позиция!)
   ctx.strokeStyle = col;
   ctx.lineWidth = isHovered ? 2.5 : 1.5;
   if (isHovered && activeGlow === targetId) {
@@ -1204,11 +1218,18 @@ function findHit(x,y){
 
 cv.addEventListener('mousedown', e=>{
   const p=cPos(e);
+  
+  // Проверка дали сме кликнали върху текстова табелка
   const annHit = findAnnotationHit(p.x, p.y);
   if (annHit) {
       startGlow(annHit);
+      dragging = 'ann_' + annHit;
+      const box = annotationBoxes.find(b => b.id === annHit);
+      if (box) dragAnnOffset = { x: p.x - (box.x + box.w/2), y: p.y - (box.y + box.h/2) };
+      cv.style.cursor='grabbing';
       return;
   }
+  
   dragging=findHit(p.x,p.y);
   if(dragging) cv.style.cursor='grabbing';
 });
@@ -1217,24 +1238,33 @@ cv.addEventListener('mousemove', e=>{
   const p=cPos(e);
   const annHit = findAnnotationHit(p.x, p.y);
   
-  if (annHit !== hoveredAnnotation) {
+  if (annHit !== hoveredAnnotation && !dragging) {
       hoveredAnnotation = annHit;
-      if (!dragging) redraw(); 
+      redraw(); 
   }
 
+  // Ако влачим текстова табелка
+  if (dragging && typeof dragging === 'string' && dragging.startsWith('ann_')) {
+      const id = dragging.substring(4);
+      customAnnPos[id] = { x: p.x - dragAnnOffset.x, y: p.y - dragAnnOffset.y };
+      cv.style.cursor = 'grabbing';
+      redraw();
+      return;
+  }
+
+  // Ако влачим радиус или геометрична точка
   if(dragging==='_R'){
     const minR=60, maxR=Math.min(W,H)*0.45;
     const d=Math.hypot(p.x-CX,p.y-CY);
     if(d>=minR && d<=maxR){ _Rx=p.x; _Ry=p.y; }
     else if(d<minR){ const a=Math.atan2(p.y-CY,p.x-CX); _Rx=CX+minR*Math.cos(a); _Ry=CY+minR*Math.sin(a); }
     else           { const a=Math.atan2(p.y-CY,p.x-CX); _Rx=CX+maxR*Math.cos(a); _Ry=CY+maxR*Math.sin(a); }
-    resetPts();
+    resetPts(); // (това ще нулира текста само при теглене на радиус)
   } else if(dragging){ 
     pts[dragging]=Math.atan2(p.y-CY,p.x-CX); redraw(); 
   } else {
-    if (annHit) {
-       cv.style.cursor = 'pointer';
-    } else if (findHit(p.x, p.y)) {
+    // Курсор при свободна мишка
+    if (annHit || findHit(p.x, p.y)) {
        cv.style.cursor = 'grab';
     } else {
        cv.style.cursor = 'default';
@@ -1251,6 +1281,9 @@ cv.addEventListener('touchstart', e=>{
   if (annHit) {
       e.preventDefault();
       startGlow(annHit);
+      dragging = 'ann_' + annHit;
+      const box = annotationBoxes.find(b => b.id === annHit);
+      if (box) dragAnnOffset = { x: p.x - (box.x + box.w/2), y: p.y - (box.y + box.h/2) };
       return;
   }
   dragging=findHit(p.x,p.y);
@@ -1261,6 +1294,14 @@ cv.addEventListener('touchmove',  e=>{
   if(!dragging) return;
   e.preventDefault();
   const p=cPos(e);
+  
+  if (typeof dragging === 'string' && dragging.startsWith('ann_')) {
+      const id = dragging.substring(4);
+      customAnnPos[id] = { x: p.x - dragAnnOffset.x, y: p.y - dragAnnOffset.y };
+      redraw();
+      return;
+  }
+  
   if(dragging==='_R'){
     const d=Math.hypot(p.x-CX,p.y-CY),minR=60,maxR=Math.min(W,H)*0.45;
     if(d>=minR&&d<=maxR){_Rx=p.x;_Ry=p.y;}
